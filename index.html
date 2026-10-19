@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="day">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Kailash Kumar — DevOps Engineer &amp; Blogger</title>
+<meta name="description" content="Kailash Kumar — DevOps Engineer with 3.6+ years in AWS, Kubernetes, CI/CD and Linux. Also a traveller, blogger and photographer from Rajasthan, India."/>
+<meta name="theme-color" content="#EEF1FA"/>
+<meta name="color-scheme" content="light dark"/>
+<meta property="og:title" content="Kailash Kumar — DevOps Engineer &amp; Blogger"/>
+<meta property="og:description" content="Building systems by day, writing stories by night."/>
+<meta property="og:type" content="website"/>
+<meta property="og:image" content="assets/img/beach.webp"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23FFB400'/%3E%3Ctext x='32' y='44' font-size='36' font-weight='800' text-anchor='middle' font-family='Arial' fill='%230E1440'%3EK%3C/text%3E%3C/svg%3E"/>
+
+<!-- Pick the saved (or system) theme before first paint so the page never flashes the wrong shift. -->
+<script>
+(function () {
+  var t = null;
+  try { t = localStorage.getItem('kk-theme'); } catch (e) {}
+  if (t !== 'day' && t !== 'night') {
+    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day';
+  }
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&display=swap" rel="stylesheet"/>
+<link rel="preload" as="image" href="assets/img/beach.webp"/>
+
+<style>
+/* ============================================================
+   TOKENS
+   Day shift  = lime-wash white with Jodhpur-blue ink, marigold sun.
+   Night shift = Jodhpur-blue walls with chalk ink, pale moon.
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --font-display:'Bricolage Grotesque','Arial Narrow',system-ui,sans-serif;
+  --font-text:'Newsreader',Georgia,'Times New Roman',serif;
+  --gutter:clamp(1.25rem,5vw,4rem);
+  --maxw:1200px;
+  --nav-h:68px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --marigold:#FFB400;
+}
+
+:root,
+:root[data-theme="day"]{
+  color-scheme:light;
+  --paper:#EEF1FA;
+  --paper-2:#E1E6F5;
+  --ink:#0E1440;
+  --ink-2:#3A4272;
+  --rule:rgba(14,20,64,.20);
+  --link:#2A3FD0;
+  --orb:#FFB400;
+  --btn-bg:#0E1440;
+  --btn-ink:#EEF1FA;
+  /* closing contact section: deep indigo in both shifts */
+  --c-bg:#0E1440;
+  --c-fg:#EEF1FA;
+  --c-muted:#B8C0E8;
+  --c-rule:rgba(238,241,250,.28);
+  --c-link:#FFC233;
+  --c-btn-bg:#FFB400;
+  --c-btn-ink:#0E1440;
+}
+:root[data-theme="night"]{
+  color-scheme:dark;
+  --paper:#0F1654;
+  --paper-2:#171F70;
+  --ink:#EEF1FA;
+  --ink-2:#B8C0E8;
+  --rule:rgba(238,241,250,.24);
+  --link:#FFC233;
+  --orb:#E4E9FF;
+  --btn-bg:#FFB400;
+  --btn-ink:#0E1440;
+  --c-bg:#070B33;
+  --c-fg:#EEF1FA;
+  --c-muted:#B8C0E8;
+  --c-rule:rgba(238,241,250,.28);
+  --c-link:#FFC233;
+  --c-btn-bg:#FFB400;
+  --c-btn-ink:#0E1440;
+}
+
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 16px);-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+body{
+  font-family:var(--font-text);
+  font-size:1.125rem;
+  line-height:1.65;
+  background:var(--paper);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:clip;
+}
+body:has(dialog[open]){overflow:hidden}
+
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+ul{list-style:none}
+::selection{background:var(--marigold);color:#0E1440}
+:focus-visible{outline:3px solid var(--link);outline-offset:3px;border-radius:3px}
+
+/* Focal points: every photo is a tall portrait with the head high in frame,
+   so cropped boxes must anchor near the top or heads get cut off. */
+img[src$="beach.webp"]      {object-position:50% 18%}
+img[src$="cocktail.webp"]   {object-position:50% 22%}
+img[src$="event-hall.webp"] {object-position:50% 16%}
+img[src$="event-night.webp"]{object-position:50% 20%}
+img[src$="formal.webp"]     {object-position:50% 14%}
+img[src$="glasses.webp"]    {object-position:50% 30%}
+img[src$="hotel.webp"]      {object-position:50% 18%}
+img[src$="mirror.webp"]     {object-position:50% 34%}
+img[src$="mountains.webp"]  {object-position:50% 46%}
+img[src$="office.webp"]     {object-position:50% 38%}
+
+.skip{position:absolute;left:1rem;top:-4rem;z-index:100;background:var(--ink);color:var(--paper);padding:.6rem 1rem;border-radius:6px;font-family:var(--font-display);font-weight:600;text-decoration:none}
+.skip:focus{top:1rem}
+
+.wrap{width:100%;max-width:calc(var(--maxw) + var(--gutter) * 2);margin-inline:auto;padding-inline:var(--gutter)}
+
+/* ============================================================
+   TYPE
+   ============================================================ */
+h1,h2,h3{font-family:var(--font-display);font-weight:700;font-stretch:80%;letter-spacing:-.02em;line-height:1.05}
+
+.sect{padding-block:clamp(4.5rem,9vw,8rem)}
+.sect--tint{background:var(--paper-2)}
+
+.sect-head{display:grid;gap:1.25rem 4rem;align-items:end;margin-bottom:clamp(2.5rem,5vw,4.5rem)}
+.sect-head h2{font-size:clamp(2.5rem,5.4vw,4.6rem);letter-spacing:-.03em;line-height:1}
+.sect-head p{color:var(--ink-2);max-width:42ch}
+@media (min-width:900px){.sect-head{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}}
+
+.prose p{max-width:60ch}
+.prose p + p{margin-top:1.1em}
+.prose strong{font-weight:600}
+
+/* ============================================================
+   BUTTONS + LINKS
+   ============================================================ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:48px;padding:.7rem 1.5rem;border-radius:999px;
+  font-family:var(--font-display);font-weight:600;font-size:1rem;letter-spacing:-.005em;
+  text-decoration:none;cursor:pointer;
+  border:2px solid var(--ink);color:var(--ink);background:transparent;
+  transition:background-color .15s,color .15s,border-color .15s;
+}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn--solid{background:var(--btn-bg);color:var(--btn-ink);border-color:var(--btn-bg)}
+.btn--solid:hover{background:var(--marigold);color:#0E1440;border-color:var(--marigold)}
+
+.text-link{color:var(--link);text-decoration:underline;text-underline-offset:.2em;text-decoration-thickness:1.5px}
+.text-link:hover{text-decoration-thickness:3px}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid var(--rule)}
+.nav-inner{display:flex;align-items:center;gap:1.25rem;height:var(--nav-h)}
+.brand{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--font-display);font-weight:700;font-stretch:85%;font-size:1.35rem;letter-spacing:-.02em;text-decoration:none;margin-right:auto}
+.brand::before{content:'';width:.85rem;height:.85rem;border-radius:50%;background:var(--orb);box-shadow:0 0 0 2px var(--ink) inset}
+
+.nav-menu{display:none;position:absolute;left:0;right:0;top:var(--nav-h);flex-direction:column;gap:.25rem;padding:1rem var(--gutter) 1.5rem;background:var(--paper);border-bottom:1px solid var(--rule)}
+.nav.open .nav-menu{display:flex}
+.nav-menu a{display:block;padding:.65rem 0;font-family:var(--font-display);font-weight:500;font-size:1.15rem;text-decoration:none}
+.nav-menu a[aria-current="true"]{text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:.3em;text-decoration-color:var(--orb)}
+.nav-menu .btn{margin-top:.75rem;color:var(--btn-ink)}
+
+@media (max-width:1099px){
+  .shift button{min-height:32px;padding:0 .65rem;font-size:.85rem}
+  .nav-toggle{padding:0 .85rem}
+}
+@media (max-width:479px){
+  .brand-last{display:none}
+  .nav-inner{gap:.6rem}
+  .brand{font-size:1.2rem}
+}
+@media (max-width:359px){.nav-inner{gap:.4rem}.shift button{padding:0 .5rem;font-size:.8rem}.nav-toggle{padding:0 .65rem;font-size:.85rem}}
+@media (max-width:359px){.brand::before{display:none}}
+
+.nav-toggle{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 1rem;border:2px solid var(--ink);border-radius:999px;background:transparent;color:var(--ink);font-family:var(--font-display);font-weight:600;font-size:.95rem;cursor:pointer}
+
+.shift{display:inline-flex;padding:3px;border:2px solid var(--ink);border-radius:999px}
+.shift button{min-height:34px;padding:0 .8rem;border:0;border-radius:999px;background:transparent;color:var(--ink);font-family:var(--font-display);font-weight:600;font-size:.9rem;cursor:pointer}
+.shift button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+
+@media (min-width:1100px){
+  .nav-inner{gap:1.5rem;flex-wrap:nowrap}
+  .nav-toggle{display:none}
+  .nav-menu{display:flex;position:static;flex-direction:row;align-items:center;gap:1.25rem;padding:0;border:0;background:transparent;margin-left:auto}
+  .nav-menu a{padding:.25rem 0;font-size:1rem}
+  .nav-menu .btn{margin:0;padding:.45rem 1.2rem;min-height:42px}
+  .nav-menu .btn:hover{color:#0E1440}
+  .brand{margin-right:0}
+}
+
+/* ============================================================
+   HERO — the one loud moment: oversized name + haveli arch + sun/moon
+   ============================================================ */
+.hero{padding-block:clamp(2.5rem,6vw,5rem) clamp(3rem,6vw,5rem)}
+.hero-grid{display:grid;gap:3rem;align-items:center}
+@media (min-width:900px){.hero-grid{grid-template-columns:minmax(0,1.3fr) minmax(0,.8fr);gap:3rem}}
+
+.hero-role{font-family:var(--font-display);font-weight:500;font-size:1.1rem;color:var(--ink-2);margin-bottom:1.25rem}
+.hero-name{font-weight:800;font-stretch:75%;font-size:clamp(4.25rem,13.5vw,11rem);line-height:.88;letter-spacing:-.04em}
+.hero-name .line{display:block;overflow:hidden;padding-bottom:.07em}
+.hero-name .line > span{display:block}
+.hero-tagline{margin-top:1.75rem;font-style:italic;font-size:clamp(1.35rem,2.6vw,1.9rem);line-height:1.3;max-width:24ch}
+.hero-desc{margin-top:1.25rem;color:var(--ink-2);max-width:52ch}
+.hero-now{display:flex;align-items:center;gap:.7rem;margin-top:1.5rem;font-family:var(--font-display);font-weight:500;font-size:1rem}
+.hero-now::before{content:'';flex:none;width:.65rem;height:.65rem;border-radius:50%;background:#1FA463}
+.hero-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem}
+
+.hero-figure{position:relative;width:100%;max-width:460px;margin-inline:auto}
+.hero-orb{position:absolute;z-index:0;width:62%;aspect-ratio:1;right:-9%;top:-7%;border-radius:50%;background:var(--orb)}
+
+@media (max-width:899px){.hero-orb{right:-4%}}
+
+.arch{position:relative;z-index:1;overflow:hidden;border-radius:999px 999px 10px 10px;background:var(--paper-2);aspect-ratio:5/6}
+.arch img{width:100%;height:100%;object-fit:cover}
+
+.facts{display:flex;flex-wrap:wrap;gap:1.25rem 4rem;margin-top:clamp(3rem,6vw,5rem);padding-top:1.5rem;border-top:1px solid var(--rule)}
+.fact strong{display:block;font-family:var(--font-display);font-weight:700;font-stretch:80%;font-size:2.5rem;line-height:1;letter-spacing:-.03em}
+.fact span{color:var(--ink-2);font-size:1rem}
+
+/* single page-load sequence; skipped entirely for reduced motion */
+@media (prefers-reduced-motion:no-preference){
+  .hero-name .line > span{transform:translateY(108%);animation:rise 1s var(--ease) .1s forwards}
+  .hero-name .line:nth-child(2) > span{animation-delay:.22s}
+  .hero .arch{clip-path:inset(100% 0 0 0);animation:unveil 1.1s var(--ease) .45s forwards}
+  .hero-orb{transform:scale(0);animation:orb-in .9s var(--ease) .95s forwards}
+}
+@keyframes rise{to{transform:none}}
+@keyframes unveil{to{clip-path:inset(0 0 0 0)}}
+@keyframes orb-in{to{transform:scale(1)}}
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about-grid{display:grid;gap:3.5rem;align-items:start}
+@media (min-width:900px){.about-grid{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:5rem}}
+.about-media{position:relative;max-width:480px;padding-bottom:3rem}
+.about-media .arch{aspect-ratio:4/5}
+.about-inset{position:absolute;z-index:2;right:-6%;bottom:0;width:38%;aspect-ratio:3/4;object-fit:cover;border-radius:8px;border:5px solid var(--paper)}
+@media (max-width:899px){.about-inset{right:0}}
+
+.details{display:grid;gap:0;margin-top:2.25rem;border-top:1px solid var(--rule)}
+.details div{display:grid;gap:.1rem 1.5rem;padding-block:.85rem;border-bottom:1px solid var(--rule)}
+.details dt{font-family:var(--font-display);font-weight:600;font-size:.95rem;color:var(--ink-2)}
+.details dd{overflow-wrap:anywhere}
+@media (min-width:560px){.details div{grid-template-columns:8rem 1fr;align-items:baseline}}
+
+/* ============================================================
+   BEYOND WORK
+   ============================================================ */
+.life-grid{display:grid;gap:2.75rem 2rem}
+@media (min-width:760px){.life-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.life-item img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:8px}
+.life-item h3{font-size:1.6rem;line-height:1.15;margin-top:1.1rem}
+.life-item p{margin-top:.5rem;color:var(--ink-2)}
+
+.manifesto{display:grid;gap:1.75rem 5rem;margin-top:clamp(3.5rem,8vw,6.5rem);padding-top:clamp(2rem,4vw,3rem);border-top:1px solid var(--rule)}
+.manifesto h3{font-size:clamp(2.2rem,5vw,4rem);font-stretch:78%;letter-spacing:-.03em;line-height:1}
+.manifesto p{max-width:50ch}
+@media (min-width:900px){.manifesto{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:end}}
+
+.hobby-list{border-top:1px solid var(--rule)}
+.hobby{display:grid;gap:.5rem 3rem;padding-block:1.6rem;border-bottom:1px solid var(--rule)}
+.hobby h3{font-size:clamp(1.7rem,3vw,2.3rem)}
+.hobby p{color:var(--ink-2);max-width:52ch}
+@media (min-width:800px){.hobby{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);align-items:baseline}}
+
+/* ============================================================
+   SKILLS
+   ============================================================ */
+.skill-groups{display:grid;gap:3.25rem}
+@media (min-width:900px){.skill-groups{grid-template-columns:repeat(3,minmax(0,1fr));gap:3.5rem}}
+.skill-group h3{font-size:1.65rem;margin-bottom:1.1rem}
+.skill{display:grid;grid-template-columns:1fr auto;gap:.4rem 1rem;padding-block:.8rem;border-top:1px solid var(--rule)}
+.skill-name{font-size:1.05rem}
+.skill-val{font-family:var(--font-display);font-weight:600;font-size:.95rem;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.skill-bar{grid-column:1/-1;position:relative;height:4px;border-radius:4px;background:var(--rule);overflow:hidden}
+.skill-bar::after{content:'';position:absolute;inset:0 auto 0 0;width:var(--w);background:var(--link);border-radius:4px}
+
+.certs-block{margin-top:clamp(3.5rem,7vw,5.5rem)}
+.certs-block > h3{font-size:1.65rem;margin-bottom:1.25rem}
+.certs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border-top:1px solid var(--rule)}
+.cert{padding:1.35rem 1.25rem 1.5rem 0;border-bottom:1px solid var(--rule)}
+.cert b{display:block;font-family:var(--font-display);font-weight:800;font-stretch:80%;font-size:2.1rem;line-height:1;letter-spacing:-.03em;color:var(--link)}
+.cert span{display:block;margin-top:.55rem;line-height:1.35}
+.cert small{display:block;margin-top:.25rem;font-size:.95rem;color:var(--ink-2)}
+
+/* ============================================================
+   EXPERIENCE
+   ============================================================ */
+.exp-grid{display:grid;gap:3rem}
+@media (min-width:960px){.exp-grid{grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:5.5rem}}
+.exp-aside{align-self:start;max-width:340px}
+@media (min-width:960px){.exp-aside{position:sticky;top:calc(var(--nav-h) + 2rem)}}
+.exp-aside img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px}
+.exp-aside blockquote{margin-top:1.25rem;font-style:italic;color:var(--ink-2)}
+
+.job{padding-top:1.5rem;border-top:1px solid var(--rule)}
+.job + .job{margin-top:3.5rem}
+.job-date{font-family:var(--font-display);font-weight:600;font-size:.95rem;color:var(--ink-2)}
+.job h3{margin-top:.5rem;font-size:clamp(1.9rem,3.6vw,2.8rem);letter-spacing:-.025em}
+.job-role{margin-top:.3rem;font-style:italic;font-size:1.25rem;color:var(--ink-2)}
+.job ul.points{display:grid;gap:.6rem;margin-top:1.4rem;padding-left:1.15rem;list-style:disc}
+.job ul.points li::marker{color:var(--link)}
+.job-tools{margin-top:1.4rem;font-family:var(--font-display);font-weight:500;font-size:.98rem}
+.job-tools b{font-weight:700}
+
+/* ============================================================
+   ACHIEVEMENTS
+   ============================================================ */
+.ach-grid{display:grid}
+@media (min-width:760px){.ach-grid{grid-template-columns:1fr 1fr;column-gap:5rem}}
+.ach{padding-block:1.75rem 2.5rem;border-top:1px solid var(--rule)}
+.ach h3{font-size:clamp(1.55rem,2.6vw,2rem);letter-spacing:-.02em}
+.ach p{margin-top:.7rem;color:var(--ink-2);max-width:46ch}
+
+/* ============================================================
+   BLOG
+   ============================================================ */
+.post-feature-grid{display:grid;gap:3rem 2.5rem}
+@media (min-width:760px){.post-feature-grid{grid-template-columns:1fr 1fr}}
+.post img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:8px}
+.post-cat{font-family:var(--font-display);font-weight:600;font-size:.95rem;color:var(--link)}
+.post-body{margin-top:1.15rem}
+.post-title{margin-top:.35rem;line-height:1.15;font-size:clamp(1.65rem,2.8vw,2.2rem);letter-spacing:-.02em;line-height:1.1}
+.post-excerpt{margin-top:.7rem;color:var(--ink-2);max-width:52ch}
+.post-meta{margin-top:.8rem;font-family:var(--font-display);font-weight:500;font-size:.92rem;color:var(--ink-2)}
+
+.post-list{margin-top:clamp(3rem,6vw,4.5rem);border-top:1px solid var(--rule)}
+.post-row{display:grid;grid-template-columns:96px minmax(0,1fr);gap:1.1rem 1.5rem;align-items:start;padding-block:1.5rem;border-bottom:1px solid var(--rule)}
+.post-row img{width:96px;aspect-ratio:1;object-fit:cover;border-radius:6px}
+.post-row .post-title{font-size:clamp(1.3rem,2.2vw,1.65rem);margin-top:.2rem}
+.post-row .post-excerpt{margin-top:.4rem}
+@media (min-width:760px){.post-row{grid-template-columns:140px minmax(0,1fr);gap:2rem}.post-row img{width:140px}}
+
+/* ============================================================
+   GALLERY
+   ============================================================ */
+.gallery{column-count:2;column-gap:1rem}
+@media (min-width:760px){.gallery{column-count:3}}
+@media (min-width:1100px){.gallery{column-count:4}}
+.g-item{break-inside:avoid;margin-bottom:1.25rem}
+.g-btn{display:block;width:100%;padding:0;border:0;background:var(--paper);border-radius:6px;overflow:hidden;cursor:zoom-in}
+.g-btn img{width:100%}
+.g-item figcaption{margin-top:.45rem;font-size:.95rem;color:var(--ink-2);line-height:1.35}
+
+.lightbox{border:0;padding:0;margin:auto;background:transparent;color:#fff;width:min(94vw,860px);overflow:visible}
+.lightbox::backdrop{background:rgba(8,12,44,.9)}
+.lightbox img{margin-inline:auto;width:auto;max-width:100%;max-height:calc(100vh - 9rem);border-radius:6px}
+.lightbox figcaption{margin-top:.75rem;text-align:center;font-family:var(--font-display);font-weight:500}
+.lb-bar{display:flex;justify-content:space-between;gap:.75rem;margin-top:1rem}
+.lb-bar button{min-height:44px;padding:0 1.25rem;border:2px solid #fff;border-radius:999px;background:transparent;color:#fff;font-family:var(--font-display);font-weight:600;font-size:1rem;cursor:pointer}
+.lb-bar button:hover{background:#fff;color:#0E1440}
+.lightbox :focus-visible{outline-color:var(--marigold)}
+
+/* ============================================================
+   CONTACT — deep indigo closing block in both shifts
+   ============================================================ */
+.contact{background:var(--c-bg);color:var(--c-fg)}
+.contact .sect-head p,.contact .muted{color:var(--c-muted)}
+.contact-grid{display:grid;gap:3.5rem}
+@media (min-width:960px){.contact-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:5.5rem}}
+
+.avail{display:flex;align-items:center;gap:.7rem;margin-top:1.75rem;font-family:var(--font-display);font-weight:500}
+.avail::before{content:'';flex:none;width:.65rem;height:.65rem;border-radius:50%;background:#34D17E}
+
+.reach{margin-top:2rem;border-top:1px solid var(--c-rule)}
+.reach div{display:grid;gap:.1rem 1.5rem;padding-block:.9rem;border-bottom:1px solid var(--c-rule)}
+.reach dt{font-family:var(--font-display);font-weight:600;font-size:.95rem;color:var(--c-muted)}
+.reach dd{overflow-wrap:anywhere}
+.reach a{color:var(--c-fg);text-decoration:underline;text-underline-offset:.2em;text-decoration-thickness:1.5px}
+.reach a:hover{color:var(--c-link);text-decoration-thickness:3px}
+@media (min-width:560px){.reach div{grid-template-columns:7rem 1fr;align-items:baseline}}
+
+.form{display:grid;gap:1.1rem;align-content:start}
+.form-row{display:grid;gap:1.1rem}
+@media (min-width:600px){.form-row{grid-template-columns:1fr 1fr}}
+.field{display:grid;gap:.4rem}
+.field label{font-family:var(--font-display);font-weight:600;font-size:.95rem}
+.field input,.field textarea{width:100%;padding:.85rem 1rem;border:1.5px solid var(--c-rule);border-radius:8px;background:transparent;color:var(--c-fg);font:inherit;font-size:1.05rem;line-height:1.5}
+.field textarea{resize:vertical;min-height:9rem}
+.field input:focus-visible,.field textarea:focus-visible{outline:3px solid var(--c-link);outline-offset:2px;border-color:transparent}
+.form .btn{border-color:var(--c-btn-bg);background:var(--c-btn-bg);color:var(--c-btn-ink);justify-self:start;cursor:pointer}
+.form .btn:hover{background:var(--marigold);border-color:var(--marigold);color:#0E1440}
+.form-note{font-size:.95rem}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer{padding-block:3.5rem 2.5rem;border-top:1px solid var(--rule)}
+.footer-top{display:grid;gap:2rem}
+@media (min-width:800px){.footer-top{grid-template-columns:1.2fr 1fr;align-items:start}}
+.footer-name{font-family:var(--font-display);font-weight:800;font-stretch:78%;font-size:2.2rem;letter-spacing:-.03em;line-height:1}
+.footer p{color:var(--ink-2);max-width:40ch;margin-top:.75rem}
+.footer nav{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem}
+@media (min-width:800px){.footer nav{justify-content:flex-end}}
+.footer nav a{font-family:var(--font-display);font-weight:500;text-decoration:none}
+.footer nav a:hover{text-decoration:underline;text-underline-offset:.25em}
+.footer-bottom{margin-top:2.5rem;padding-top:1.25rem;border-top:1px solid var(--rule);font-size:.95rem;color:var(--ink-2)}
+.footer-bottom p{margin:0;max-width:none}
+</style>
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top" aria-label="Kailash Kumar, back to top">Kailash<span class="brand-last">&nbsp;Kumar</span></a>
+
+    <nav class="nav-menu" id="navMenu" aria-label="Main">
+      <a href="#about">About</a>
+      <a href="#personal">Life</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#blog">Blog</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+      <a class="btn btn--solid" href="mailto:kailashkadwa3883@gmail.com">Hire me</a>
+    </nav>
+
+    <div class="shift" role="group" aria-label="Page theme">
+      <button type="button" data-set-theme="day" aria-pressed="true">Day</button>
+      <button type="button" data-set-theme="night" aria-pressed="false">Night</button>
+    </div>
+    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navMenu">Menu</button>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="hero-role">DevOps engineer and travel blogger from Rajasthan</p>
+        <h1 class="hero-name" aria-label="Kailash Kumar">
+          <span class="line" aria-hidden="true"><span>Kailash</span></span>
+          <span class="line" aria-hidden="true"><span>Kumar</span></span>
+        </h1>
+        <p class="hero-tagline">Building systems by day, writing stories by night.</p>
+        <p class="hero-desc">A DevOps engineer with 3.6+ years of hands-on experience in cloud infrastructure, CI/CD and Linux systems. Also a traveller, blogger and photographer who believes life is meant to be explored and shared.</p>
+        <p class="hero-now">Currently at Media Tech Temple, keeping production quiet</p>
+        <div class="hero-actions">
+          <a class="btn btn--solid" href="#experience">View my work</a>
+          <a class="btn" href="#blog">Read the blog</a>
+          <a class="btn" href="#contact">Say hello</a>
+        </div>
+      </div>
+
+      <figure class="hero-figure">
+        <div class="hero-orb" aria-hidden="true"></div>
+        <div class="arch">
+          <img src="assets/img/beach.webp" alt="Kailash Kumar on a beach in Goa" width="865" height="1300" fetchpriority="high"/>
+        </div>
+      </figure>
+    </div>
+
+    <div class="facts">
+      <div class="fact"><strong>3.6+</strong><span>years of experience</span></div>
+      <div class="fact"><strong>5</strong><span>certifications</span></div>
+      <div class="fact"><strong>2</strong><span>companies</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="sect" id="about">
+  <div class="wrap">
+    <header class="sect-head">
+      <h2>Engineer, explorer, writer</h2>
+      <p>Three words that describe me, and there is more to the story.</p>
+    </header>
+
+    <div class="about-grid">
+      <div class="about-media">
+        <div class="arch"><img src="assets/img/office.webp" alt="Kailash working at his desk" width="1000" height="1250" loading="lazy" decoding="async"/></div>
+        <img class="about-inset" src="assets/img/formal.webp" alt="Kailash in formal wear" width="491" height="775" loading="lazy" decoding="async"/>
+      </div>
+
+      <div>
+        <div class="prose">
+          <p>Hi, I'm <strong>Kailash Kumar</strong>, a DevOps engineer based in Didwana, Nagaur, Rajasthan. By day I design cloud infrastructure and automate deployments. By night I write, travel and capture moments that matter.</p>
+          <p>I currently work at <strong>Media Tech Temple</strong> as a Server/DevOps Engineer, managing Linux servers, CI/CD pipelines, AWS cloud and full observability stacks. Before that, I spent 2+ years at <strong>Angara Ecommerce Pvt. Ltd.</strong></p>
+          <p>Life for me is about balance. The thrill of a perfectly deployed pipeline is equal to the joy of reaching a mountain top or sharing a story that connects with someone.</p>
+          <p>The through-line in both halves is the same: <strong>pay attention, then make it repeatable.</strong> A good pipeline and a good story are both built from noticing the small thing everyone else scrolled past.</p>
+        </div>
+
+        <dl class="details">
+          <div><dt>Location</dt><dd>Didwana, Nagaur, Rajasthan</dd></div>
+          <div><dt>Email</dt><dd>kailashkadwa3883@gmail.com</dd></div>
+          <div><dt>Phone</dt><dd>+91 8094845254</dd></div>
+          <div><dt>Education</dt><dd>B.A., Tagore Mahavidyalaya</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BEYOND WORK ============ -->
+<section class="sect sect--tint" id="personal">
+  <div class="wrap">
+    <header class="sect-head">
+      <h2>Beyond work</h2>
+      <p>Work matters, but so does living. Here is who I am when I'm away from the terminal.</p>
+    </header>
+
+    <div class="life-grid">
+      <article class="life-item">
+        <img src="assets/img/mountains.webp" alt="A road through the mountains" width="710" height="686" loading="lazy" decoding="async"/>
+        <h3>Roads, mountains and long drives</h3>
+        <p>Every road trip is a new story. From the mountains of Himachal to the deserts of Rajasthan, I chase horizons on weekends.</p>
+      </article>
+      <article class="life-item">
+        <img src="assets/img/event-night.webp" alt="Kailash at an evening event" width="586" height="1300" loading="lazy" decoding="async"/>
+        <h3>Meeting people, making connections</h3>
+        <p>I love industry events, conferences and social gatherings. People are the best source of inspiration and learning.</p>
+      </article>
+      <article class="life-item">
+        <img src="assets/img/cocktail.webp" alt="Kailash at a cocktail evening" width="577" height="1280" loading="lazy" decoding="async"/>
+        <h3>Celebrating every moment</h3>
+        <p>Life is too short not to celebrate. Whether it's a big occasion or just a Friday night, I find reasons to enjoy it.</p>
+      </article>
+    </div>
+
+    <div class="manifesto">
+      <h3>Life is a journey, not a destination.</h3>
+      <p>Every trip teaches you something new about the world, about people and, most of all, about yourself. <strong>Goa, Himachal, Rajasthan, Uttarakhand:</strong> each place has left a mark. I carry a camera, a notebook and an open heart wherever I go.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOBBIES ============ -->
+<section class="sect" id="hobbies">
+  <div class="wrap">
+    <header class="sect-head">
+      <h2>Life beyond the terminal</h2>
+      <p>What I do when I'm not managing servers and pipelines.</p>
+    </header>
+
+    <div class="hobby-list">
+      <article class="hobby"><h3>Travel and road trips</h3><p>Mountains, deserts, beaches: I've driven through them all. Travel is how I reset, reflect and return better.</p></article>
+      <article class="hobby"><h3>Photography</h3><p>Every trip, every moment, I capture it. My phone gallery is basically a visual diary of my life.</p></article>
+      <article class="hobby"><h3>Writing and blogging</h3><p>Writing helps me process thoughts, share experiences and connect with people who feel the same things.</p></article>
+      <article class="hobby"><h3>Cricket</h3><p>A proud cricket fan. I watch every match and play whenever I get the chance. It's more than a sport; it's a religion.</p></article>
+      <article class="hobby"><h3>Music</h3><p>Hindi songs, Bollywood beats, late-night playlists. Music is the soundtrack to my life and work.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section class="sect sect--tint" id="skills">
+  <div class="wrap">
+    <header class="sect-head">
+      <h2>Skills and certifications</h2>
+      <p>3.6+ years of building, breaking and fixing. This is what I know well.</p>
+    </header>
+
+    <div class="skill-groups">
+      <div class="skill-group">
+        <h3>DevOps and CI/CD</h3>
+        <ul>
+          <li class="skill"><span class="skill-name">Jenkins and Azure DevOps</span><span class="skill-val">92%</span><span class="skill-bar" style="--w:92%"></span></li>
+          <li class="skill"><span class="skill-name">Docker and Kubernetes</span><span class="skill-val">88%</span><span class="skill-bar" style="--w:88%"></span></li>
+          <li class="skill"><span class="skill-name">Terraform</span><span class="skill-val">82%</span><span class="skill-bar" style="--w:82%"></span></li>
+          <li class="skill"><span class="skill-name">Prometheus and Grafana</span><span class="skill-val">85%</span><span class="skill-bar" style="--w:85%"></span></li>
+          <li class="skill"><span class="skill-name">Kibana / ELK stack</span><span class="skill-val">78%</span><span class="skill-bar" style="--w:78%"></span></li>
+          <li class="skill"><span class="skill-name">Git and GitHub</span><span class="skill-val">92%</span><span class="skill-bar" style="--w:92%"></span></li>
+          <li class="skill"><span class="skill-name">Bash automation</span><span class="skill-val">85%</span><span class="skill-bar" style="--w:85%"></span></li>
+          <li class="skill"><span class="skill-name">Nginx / Apache</span><span class="skill-val">90%</span><span class="skill-bar" style="--w:90%"></span></li>
+        </ul>
+      </div>
+
+      <div class="skill-group">
+        <h3>Cloud and AWS</h3>
+        <ul>
+          <li class="skill"><span class="skill-name">AWS EC2, ECS, ECR</span><span class="skill-val">88%</span><span class="skill-bar" style="--w:88%"></span></li>
+          <li class="skill"><span class="skill-name">S3, VPC, IAM, Route 53</span><span class="skill-val">82%</span><span class="skill-bar" style="--w:82%"></span></li>
+          <li class="skill"><span class="skill-name">CloudFront</span><span class="skill-val">76%</span><span class="skill-bar" style="--w:76%"></span></li>
+          <li class="skill"><span class="skill-name">Auto Scaling groups</span><span class="skill-val">80%</span><span class="skill-bar" style="--w:80%"></span></li>
+          <li class="skill"><span class="skill-name">CodePipeline</span><span class="skill-val">78%</span><span class="skill-bar" style="--w:78%"></span></li>
+          <li class="skill"><span class="skill-name">Node.js deployment</span><span class="skill-val">75%</span><span class="skill-bar" style="--w:75%"></span></li>
+          <li class="skill"><span class="skill-name">SSL/TLS configuration</span><span class="skill-val">88%</span><span class="skill-bar" style="--w:88%"></span></li>
+          <li class="skill"><span class="skill-name">S3 remote backend</span><span class="skill-val">82%</span><span class="skill-bar" style="--w:82%"></span></li>
+        </ul>
+      </div>
+
+      <div class="skill-group">
+        <h3>Linux administration</h3>
+        <ul>
+          <li class="skill"><span class="skill-name">Ubuntu / CentOS</span><span class="skill-val">95%</span><span class="skill-bar" style="--w:95%"></span></li>
+          <li class="skill"><span class="skill-name">IPTables, SELinux, SSH</span><span class="skill-val">88%</span><span class="skill-bar" style="--w:88%"></span></li>
+          <li class="skill"><span class="skill-name">User and group management</span><span class="skill-val">90%</span><span class="skill-bar" style="--w:90%"></span></li>
+          <li class="skill"><span class="skill-name">FTP / NFS / Samba</span><span class="skill-val">82%</span><span class="skill-bar" style="--w:82%"></span></li>
+          <li class="skill"><span class="skill-name">MySQL / PostgreSQL</span><span class="skill-val">72%</span><span class="skill-bar" style="--w:72%"></span></li>
+          <li class="skill"><span class="skill-name">YUM / RPM</span><span class="skill-val">85%</span><span class="skill-bar" style="--w:85%"></span></li>
+          <li class="skill"><span class="skill-name">Log management and debugging</span><span class="skill-val">87%</span><span class="skill-bar" style="--w:87%"></span></li>
+          <li class="skill"><span class="skill-name">Performance tuning</span><span class="skill-val">78%</span><span class="skill-bar" style="--w:78%"></span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="certs-block">
+      <h3>Certifications</h3>
+      <div class="certs">
+        <div class="cert"><b>RHCE</b><span>Red Hat Certified Engineer</span><small>IIHT Jaipur</small></div>
+        <div class="cert"><b>AWS</b><span>AWS Cloud Training</span><small>IIHT Jaipur</small></div>
+        <div class="cert"><b>K8s</b><span>Kubernetes Certified</span><small>IIHT Jaipur</small></div>
+        <div class="cert"><b>MCSE</b><span>Microsoft Certified SE</span><small>IIHT Jaipur</small></div>
+        <div class="cert"><b>N+</b><span>Network+ Certified</span><small>IIHT Jaipur</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCE ============ -->
+<section class="sect" id="experience">
+  <div class="wrap">
+    <header class="sect-head">
+      <h2>Work experience</h2>
+      <p>From junior admin to DevOps engineer: growth, late nights, and broken deployments that taught me everything.</p>
+    </header>
+
+    <div class="exp-grid">
+      <aside class="exp-aside">
+        <img src="assets/img/event-hall.webp" alt="Kailash seated at an event" width="586" height="1300" loading="lazy" decoding="async"/>
+        <blockquote>“Every deployment failure is a lesson. Every successful release is a victory worth celebrating.”</blockquote>
+      </aside>
+
+      <div>
+        <article class="job">
+          <p class="job-date">Jan 2025 to present</p>
+          <h3>Media Tech Temple</h3>
+          <p class="job-role">Server / DevOps Engineer</p>
+          <ul class="points">
+            <li>Manage Linux servers (Ubuntu/CentOS) and automate deployments using Jenkins pipelines.</li>
+            <li>Deploy and manage Nginx-based web applications with SSL certificates and reverse proxy.</li>
+            <li>Monitor infrastructure using Prometheus, Grafana and detailed log analysis.</li>
+            <li>Implement security hardening: IPTables rules, SELinux policies, SSH key management.</li>
+            <li>Write Bash scripts to automate server maintenance, health checks and routine tasks.</li>
+            <li>Monitor server health (CPU, RAM, disk, network) and resolve production issues.</li>
+          </ul>
+          <p class="job-tools"><b>Tools:</b> Jenkins, Nginx, Linux, Prometheus, Grafana, Bash</p>
+        </article>
+
+        <article class="job">
+          <p class="job-date">2022 to Dec 2024</p>
+          <h3>Angara Ecommerce Pvt. Ltd.</h3>
+          <p class="job-role">Junior DevOps / Server Administrator</p>
+          <ul class="points">
+            <li>Designed CI/CD pipelines with Azure DevOps and Jenkins for multi-environment deployments.</li>
+            <li>Automated Dev, QA, Pre-Prod and Production releases with rollback strategies.</li>
+            <li>Built and managed Kubernetes clusters; containerised applications with Docker.</li>
+            <li>Deployed Node.js apps on AWS ECS, ECR and CodePipeline.</li>
+            <li>Implemented Terraform IaC with S3 remote backend and workspace management.</li>
+            <li>Configured Apache and Nginx reverse proxies for hosting multiple websites.</li>
+            <li>Managed AWS: EC2, S3, VPC, IAM, Auto Scaling, CloudFront, Route 53.</li>
+            <li>Set up full observability: Prometheus, Grafana and Kibana (ELK stack).</li>
+            <li>Maintained FTP, NFS and Samba shares and managed MySQL/PostgreSQL databases.</li>
+          </ul>
+          <p class="job-tools"><b>Tools:</b> Azure DevOps, Docker, Kubernetes, Terraform, AWS, ELK</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACHIEVEMENTS ============ -->
+<section class="sect sect--tint" id="achievements">
+  <div class="wrap">
+    <header class="sect-head">
+      <h2>Key achievements</h2>
+      <p>The results behind the job titles.</p>
+    </header>
+
+    <div class="ach-grid">
+      <article class="ach"><h3>Zero-downtime AWS migration</h3><p>Migrated entire workloads to AWS with zero downtime using ECS and Terraform infrastructure as code, with no interruption for users.</p></article>
+      <article class="ach"><h3>Full CI/CD automation</h3><p>Reduced deployment time significantly through complete pipeline automation across Dev, QA, Staging and Production.</p></article>
+      <article class="ach"><h3>Observability stack, built from scratch</h3><p>Designed and implemented complete monitoring with Prometheus, Grafana and Kibana (ELK) for full visibility.</p></article>
+      <article class="ach"><h3>Multi-environment pipeline</h3><p>Architected a multi-environment deployment pipeline that protects production stability with automated rollback.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BLOG ============ -->
+<!-- To link a post: wrap its .post-title text in <a class="text-link" href="YOUR-URL">…</a> -->
+<section class="sect" id="blog">
+  <div class="wrap">
+    <header class="sect-head">
+      <h2>From the blog</h2>
+      <p>Tech insights, travel stories and life lessons, written from the heart.</p>
+    </header>
+
+    <div class="post-feature-grid">
+      <article class="post">
+        <img src="assets/img/mountains.webp" alt="Mountain road in Uttarakhand" width="710" height="686" loading="lazy" decoding="async"/>
+        <div class="post-body">
+          <p class="post-cat">Travel</p>
+          <h3 class="post-title">A mountain road trip that changed how I see life</h3>
+          <p class="post-excerpt">When I drove through the Uttarakhand mountains with nothing but a playlist and an open heart, I had no idea the road would teach me more than any book ever could.</p>
+          <p class="post-meta">May 2025, 6 min read</p>
+        </div>
+      </article>
+      <article class="post">
+        <img src="assets/img/office.webp" alt="Kailash at his workstation" width="1000" height="1250" loading="lazy" decoding="async"/>
+        <div class="post-body">
+          <p class="post-cat">Tech</p>
+          <h3 class="post-title">How I built my first CI/CD pipeline from zero</h3>
+          <p class="post-excerpt">Late nights, broken Jenkins jobs and a lot of Stack Overflow. The real story of my first automated pipeline and what every failure taught me.</p>
+          <p class="post-meta">April 2025, 8 min read</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="post-list">
+      <article class="post-row">
+        <img src="assets/img/hotel.webp" alt="Hotel interior" width="504" height="803" loading="lazy" decoding="async"/>
+        <div>
+          <p class="post-cat">Food</p>
+          <h3 class="post-title">Best restaurants I've visited across India</h3>
+          <p class="post-excerpt">From street dhabas to luxury hotels, my favourite food experiences, ranked honestly.</p>
+          <p class="post-meta">March 2025</p>
+        </div>
+      </article>
+      <article class="post-row">
+        <img src="assets/img/event-night.webp" alt="Kailash at a night event" width="586" height="1300" loading="lazy" decoding="async"/>
+        <div>
+          <p class="post-cat">Life</p>
+          <h3 class="post-title">What failure taught me that success never could</h3>
+          <p class="post-excerpt">Getting up is easy. Pausing to learn why you fell is the real skill.</p>
+          <p class="post-meta">Feb 2025</p>
+        </div>
+      </article>
+      <article class="post-row">
+        <img src="assets/img/glasses.webp" alt="Kailash wearing glasses" width="691" height="793" loading="lazy" decoding="async"/>
+        <div>
+          <p class="post-cat">Personal</p>
+          <h3 class="post-title">5 habits that made me a better engineer and human</h3>
+          <p class="post-excerpt">Discipline, curiosity, consistency, empathy, and one secret habit I practise every morning.</p>
+          <p class="post-meta">Jan 2025</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section class="sect sect--tint" id="gallery">
+  <div class="wrap">
+    <header class="sect-head">
+      <h2>Gallery</h2>
+      <p>A visual journal of places, events and memories. Tap any photo to enlarge it.</p>
+    </header>
+
+    <div class="gallery" id="gallery-grid">
+      <figure class="g-item"><button class="g-btn" type="button" aria-label="Open photo: Beach vibes, Goa"><img src="assets/img/beach.webp" alt="Kailash on a beach in Goa" width="865" height="1300" loading="lazy" decoding="async"/></button><figcaption>Beach vibes, Goa</figcaption></figure>
+      <figure class="g-item"><button class="g-btn" type="button" aria-label="Open photo: Suited up"><img src="assets/img/formal.webp" alt="Kailash in a formal suit" width="491" height="775" loading="lazy" decoding="async"/></button><figcaption>Suited up</figcaption></figure>
+      <figure class="g-item"><button class="g-btn" type="button" aria-label="Open photo: Hotel stay"><img src="assets/img/hotel.webp" alt="Kailash at a hotel" width="504" height="803" loading="lazy" decoding="async"/></button><figcaption>Hotel stay</figcaption></figure>
+      <figure class="g-item"><button class="g-btn" type="button" aria-label="Open photo: Glasses day"><img src="assets/img/glasses.webp" alt="Kailash wearing glasses" width="691" height="793" loading="lazy" decoding="async"/></button><figcaption>Glasses day</figcaption></figure>
+      <figure class="g-item"><button class="g-btn" type="button" aria-label="Open photo: Mountain drive"><img src="assets/img/mountains.webp" alt="A road through the mountains" width="710" height="686" loading="lazy" decoding="async"/></button><figcaption>Mountain drive</figcaption></figure>
+      <figure class="g-item"><button class="g-btn" type="button" aria-label="Open photo: Focus mode"><img src="assets/img/office.webp" alt="Kailash at his desk" width="1000" height="1250" loading="lazy" decoding="async"/></button><figcaption>Focus mode</figcaption></figure>
+      <figure class="g-item"><button class="g-btn" type="button" aria-label="Open photo: Event night"><img src="assets/img/event-hall.webp" alt="Kailash seated at an event" width="586" height="1300" loading="lazy" decoding="async"/></button><figcaption>Event night</figcaption></figure>
+      <figure class="g-item"><button class="g-btn" type="button" aria-label="Open photo: VVIP evening, Bharatpur"><img src="assets/img/event-night.webp" alt="Kailash at a VVIP evening in Bharatpur" width="586" height="1300" loading="lazy" decoding="async"/></button><figcaption>VVIP evening, Bharatpur</figcaption></figure>
+      <figure class="g-item"><button class="g-btn" type="button" aria-label="Open photo: Cocktail evening"><img src="assets/img/cocktail.webp" alt="Kailash at a cocktail evening" width="577" height="1280" loading="lazy" decoding="async"/></button><figcaption>Cocktail evening</figcaption></figure>
+      <figure class="g-item"><button class="g-btn" type="button" aria-label="Open photo: Mirror check"><img src="assets/img/mirror.webp" alt="Kailash taking a mirror selfie" width="720" height="1280" loading="lazy" decoding="async"/></button><figcaption>Mirror check</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="sect contact" id="contact">
+  <div class="wrap">
+    <header class="sect-head">
+      <h2>Let's connect</h2>
+      <p>DevOps work, a blog collaboration, a travel buddy, or just a conversation. My inbox is open.</p>
+    </header>
+
+    <div class="contact-grid">
+      <div>
+        <p class="muted" style="max-width:46ch">Whether you have a DevOps project that needs automation, a server that needs fixing, a blog idea to collaborate on, or you simply want to meet a fellow traveller, write to me.</p>
+        <p class="avail">Available for DevOps freelance projects</p>
+
+        <dl class="reach">
+          <div><dt>Email</dt><dd><a href="mailto:kailashkadwa3883@gmail.com">kailashkadwa3883@gmail.com</a></dd></div>
+          <div><dt>Phone</dt><dd><a href="tel:+918094845254">+91 8094845254</a></dd></div>
+          <div><dt>WhatsApp</dt><dd><a href="https://wa.me/918094845254" target="_blank" rel="noopener">Message me directly</a></dd></div>
+          <div><dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/kailash-kumar-28a611277/" target="_blank" rel="noopener">Kailash Kumar</a></dd></div>
+          <div><dt>Location</dt><dd><a href="https://maps.google.com/?q=Didwana,Nagaur,Rajasthan" target="_blank" rel="noopener">Didwana, Nagaur, Rajasthan</a></dd></div>
+        </dl>
+      </div>
+
+      <form class="form" id="contactForm">
+        <div class="form-row">
+          <div class="field"><label for="cfName">Your name</label><input type="text" id="cfName" autocomplete="name" required/></div>
+          <div class="field"><label for="cfEmail">Your email</label><input type="email" id="cfEmail" autocomplete="email" required/></div>
+        </div>
+        <div class="field"><label for="cfSubject">Subject</label><input type="text" id="cfSubject" placeholder="DevOps work, blog, or something else"/></div>
+        <div class="field"><label for="cfMessage">Message</label><textarea id="cfMessage" rows="6" placeholder="Tell me about your project, or just say hello." required></textarea></div>
+        <button class="btn" type="submit">Send message</button>
+        <p class="form-note muted">This opens your mail app with the message ready to send.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <p class="footer-name" style="margin:0;color:var(--ink);max-width:none">Kailash Kumar</p>
+        <p>DevOps engineer, blogger and traveller. Building things that scale, writing things that matter.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#achievements">Achievements</a>
+        <a href="#blog">Blog</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="year">2026</span> Kailash Kumar. Made in Rajasthan.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Photo viewer -->
+<dialog class="lightbox" id="lightbox" aria-label="Photo viewer">
+  <figure>
+    <img id="lbImg" src="" alt=""/>
+    <figcaption id="lbCap"></figcaption>
+  </figure>
+  <div class="lb-bar">
+    <button type="button" id="lbPrev">Previous</button>
+    <button type="button" id="lbClose">Close</button>
+    <button type="button" id="lbNext">Next</button>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  var root = document.documentElement;
+
+  /* ---------- Day / Night shift ---------- */
+  var shiftBtns = document.querySelectorAll('[data-set-theme]');
+  var metaTheme = document.querySelector('meta[name="theme-color"]');
+  function applyTheme(t, save) {
+    root.setAttribute('data-theme', t);
+    shiftBtns.forEach(function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-set-theme') === t ? 'true' : 'false');
+    });
+    if (metaTheme) metaTheme.setAttribute('content', t === 'night' ? '#0F1654' : '#EEF1FA');
+    if (save) { try { localStorage.setItem('kk-theme', t); } catch (e) {} }
+  }
+  applyTheme(root.getAttribute('data-theme') || 'day', false);
+  shiftBtns.forEach(function (b) {
+    b.addEventListener('click', function () { applyTheme(b.getAttribute('data-set-theme'), true); });
+  });
+
+  /* ---------- Mobile menu ---------- */
+  var nav = document.getElementById('nav');
+  var toggle = document.getElementById('navToggle');
+  toggle.addEventListener('click', function () {
+    var open = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.textContent = open ? 'Close' : 'Menu';
+  });
+  document.querySelectorAll('#navMenu a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      nav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.textContent = 'Menu';
+    });
+  });
+
+  /* ---------- Current section in nav ---------- */
+  var links = {};
+  document.querySelectorAll('#navMenu a[href^="#"]').forEach(function (a) {
+    links[a.getAttribute('href').slice(1)] = a;
+  });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        for (var id in links) {
+          if (id === e.target.id) links[id].setAttribute('aria-current', 'true');
+          else links[id].removeAttribute('aria-current');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+  }
+
+  /* ---------- Photo viewer ---------- */
+  var dlg = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lbImg');
+  var lbCap = document.getElementById('lbCap');
+  var items = Array.prototype.slice.call(document.querySelectorAll('.g-item'));
+  var cur = 0;
+  function show(i) {
+    cur = (i + items.length) % items.length;
+    var img = items[cur].querySelector('img');
+    lbImg.src = img.currentSrc || img.src;
+    lbImg.alt = img.alt;
+    lbCap.textContent = items[cur].querySelector('figcaption').textContent;
+  }
+  items.forEach(function (item, i) {
+    item.querySelector('.g-btn').addEventListener('click', function () {
+      show(i);
+      if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+    });
+  });
+  document.getElementById('lbPrev').addEventListener('click', function () { show(cur - 1); });
+  document.getElementById('lbNext').addEventListener('click', function () { show(cur + 1); });
+  document.getElementById('lbClose').addEventListener('click', function () { dlg.close(); });
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') show(cur - 1);
+    if (e.key === 'ArrowRight') show(cur + 1);
+  });
+
+  /* ---------- Contact form: opens a ready-to-send mail draft ---------- */
+  document.getElementById('contactForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('cfName').value.trim();
+    var email = document.getElementById('cfEmail').value.trim();
+    var subject = document.getElementById('cfSubject').value.trim() || 'Portfolio enquiry';
+    var message = document.getElementById('cfMessage').value.trim();
+    var body = message + '\n\n—\n' + name + '\n' + email;
+    window.location.href = 'mailto:kailashkadwa3883@gmail.com'
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(body);
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
